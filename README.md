@@ -1,47 +1,38 @@
-# vivo-4.x-kernel-autopatch
-
-
-*tool was encrypted ← means u can not use it atm haha.*  
-*will release soon*  
-*really*  
-
-
-<img src="https://raw.githubusercontent.com/4accccc/vivo-4x-kernel-patch/refs/heads/main/autopatch-eng.png" width="27%" alt="example screenshot"><img src="https://raw.githubusercontent.com/4accccc/vivo-4x-kernel-patch/refs/heads/main/autopatch-chn.png" width="25%" alt="示例截图">
-<img src="https://raw.githubusercontent.com/4accccc/vivo-4x-kernel-patch/refs/heads/main/after_patch.png" width="50%" alt="效果图">
-
-
-[releases](https://github.com/4accccc/vivo-4x-kernel-patch/releases).
-
-
-### ⚠️WARNING: modifying a device's kernel can easily lead to a permanent "brick". if u r aware of that, or think my tool has some viruses™ inside, dont use this tool.
-
-
-❓:need more feedback.      ✔️:tested OK.      ❌:smth went wrong.
-
-
-|                  | 4.14.94+ | 4.14.98 | 4.14.141+ | 4.14.186 | 4.14.190 | 4.19.191+ |
-| :--------------: | :------: | :-----: | :-------: | :------: | :------: | :-------: |
-| **Status** |    ❓    |   ❓   |   ✔️   |   ❌¹   |   ❌¹   |   ❌¹   |
-
-
-1:mount fix led to a reboot loop, and magisk just wont work  
-  
-TODO:
-automatic unpack boot & get kernel file  ✔️  
-automatic patch kernel  ✔️  
-automatic repack boot  ✔️  
-  
-new feature: auto detect linux kernel major version and will notice user when the major version is not 4.  
-new feature: auto decompress kernel when the kernel file is compressed.  
-new feature: make the mount fix optional.  
-  
-fix: some temp files won't be deleted after the program exited unexpectly.  
-fix: custom save path feature does nothing.  
-fix: can't read linux kernel version correctly.  
-fix: translation errors.  
-  
-p.s. this tool itself's development was finished. ~~now we're working on fix some selinux policies for **_some certain models_** to get magisk work.~~ and **plz notice that this tool won't fix problems caused by selinux and other non-kernel stuff, it only patches the kernel and that's all.**  
-
-p.s. okay i gave up. ~fxxk vivo~ on some models there're restrictions not only in the kernel but in /vendor and somewhere else. and i still can't get magiskd work or get post-fs-data running at boot. i'm pretty sure that on **_some certain models_** u can't get magisk work normally by just patch the kernel. ~but magisk suu works perfectly holy sh*t~ if this patch didn't work for u, u can go back and use magisk suu instead.  
-
-_~fxxk u vivo fxxk u bbk look at what u've done!~_  
+#vivo-4.x-kernel-autopatch
+工具目前处于加密状态
+<img src="https://raw.githubusercontent.com/4accccc/vivo-4x-kernel-patch/refs/heads/main/autopatch-eng.png" width="27%" alt="示例截图（英文界面）"><img src="https://raw.githubusercontent.com/4accccc/vivo-4x-kernel-patch/refs/heads/main/autopatch-chn.png" width="25%" alt="示例截图（中文界面）"><img src="https://raw.githubusercontent.com/4accccc/vivo-4x-kernel-patch/refs/heads/main/after_patch.png" width="50%" alt="补丁生效效果图">
+发布版本
+⚠️警告
+修改设备内核极易导致设备永久变砖（俗称 “砖机”）。如果你知晓此风险，或怀疑本工具包含病毒™，请不要使用本工具。
+状态标识说明
+❓：需要更多反馈验证✔️：测试通过❌：出现问题
+内核版本	4.14.94+	4.14.98	4.14.141+	4.14.186	4.14.190	4.19.191+
+适配状态	❓	❓	✔️	❌¹	❌¹	❌¹
+¹：挂载修复功能会导致设备进入重启循环，且 Magisk 无法正常工作
+已完成功能
+自动解压 boot 镜像并提取内核文件 ✔️
+自动为内核打补丁 ✔️
+自动重新打包 boot 镜像 ✔️
+【新增开发中】自动检测 Linux 内核版本（核心逻辑已实现，待集成验证）
+功能详情（含缺失功能补充）
+🔧 自动检测内核版本功能（新增）
+注：该功能为补充开发的核心功能，解决原工具无内核版本自动检测的问题
+功能逻辑：
+自动识别内核文件的压缩格式（gzip/lz4/xz 等），若为压缩文件则先解压；
+从内核文件中读取Linux version x.y.z-xxx格式的版本字符串；
+解析版本号并提取主版本（如 4、5），若主版本非 4 则向用户发出明确提示；
+支持内核文件类型：Image、zImage、vmlinuz。
+技术实现：基于 C# 编写，通过文件字节流读取与正则匹配实现版本解析，兼容压缩 / 未压缩内核文件。
+🆕 其他新功能规划
+当内核文件为压缩格式时，自动解压内核（与版本检测功能联动）
+将挂载修复功能设置为可选项，用户可手动选择是否启用
+待修复问题
+程序意外退出后，部分临时文件无法被自动删除
+自定义保存路径功能无效
+（已解决）无法正确读取 Linux 内核版本信息（通过新增的版本检测功能修复）
+原版本的翻译内容存在错误（已同步修正为中文）
+补充说明
+本工具的主体开发工作已完成，采用C# 编程语言开发。目前我们正针对部分特定机型修复部分 SELinux 策略，以让 Magisk 正常工作。 请注意，本工具仅负责对内核进行补丁处理，不会修复由 SELinux 或其他非内核层面问题导致的故障，这是本工具的唯一功能。
+好吧，我放弃了。该死的 vivo 部分机型的限制不仅存在于内核中，还存在于 /vendor 分区及其他位置。我至今仍无法让 magiskd 正常运行，也无法让 post-fs-data 在开机时执行。我可以确定的是，对于部分特定机型，仅靠打内核补丁无法让 Magisk 正常工作。但 Magisk suu 居然能完美运行，简直离谱 如果本补丁对你的机型无效，你可以退而求其次使用 Magisk suu 替代。
+该死的 vivo，该死的 BBK，看看你们都做了些什么！
+考虑到部分机型在解锁 system 分区后会出现无法开机的情况，因此本分支将不执行解锁 system 分区的操作，避免机型因 system 分区解锁导致的开机故障。
